@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+      input{
+        height: 30px;
+        width: 400px;
+        margin: 20px;
+      }
+  </style>
+</head>
+<body>
+       <input id="usuario_nome" placeholder="Qual seu nome"><br>
+       <input id="endereco_cep" onfocus="buscarCEP()" placeholder="Digite seu CEP"><br>
+       <input id="endereco_rua" placeholder="Digite sua Rua"><br>
+       <input id="endereco_bairro" placeholder="Digite seu Bairro"><br>
+       <input id="endereco_cidade" placeholder="Digite sua Cidade"><br>
+       <input id="endereco_estado" placeholder="Digite seu Estado"><br>
+
+      
+       <script>
+            
+function buscarCEP(){
+  // Obtém o valor do campo de CEP do formulário
+  let cep = document.getElementById("endereco_cep").value;
+  // Define a URL da API de busca de endereços com base no valor do CEP
+  let url =  "https://brasilapi.com.br/api/cep/v1/" + cep;
+      
+      // Realiza uma requisição HTTP usando a função fetch do JavaScript
+      fetch(url).then(function(dados){
+        // Se a requisição for bem-sucedida, converte a resposta em um objeto JSON
+            dados.json().then(function(endereco){
+            // Preenche os campos do formulário com os dados do endereço retornado pela API
+            document.getElementById("endereco_rua").value = endereco.street;
+            document.getElementById("endereco_cidade").value = endereco.city;
+            document.getElementById("endereco_estado").value = endereco.state;
+            document.getElementById("endereco_bairro").value = endereco.neighborhood;
+          })
+      })
+}
+
+       </script>
+</body>
+</html>
